@@ -18,8 +18,8 @@ const bot = linebot({
 bot.on('message', async (event) => {
   let msg = ''
   try {
-    const data = await rp({ uri: 'https://kktix.com/events.json', json: true })
-    msg = data.entry[0].title
+    const data = await rp({ uri: 'https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL', json: true })
+    msg = data[0].animal_place
   } catch (error) {
     msg = '發生錯誤'
   }
