@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 // 引用 request 套件
 import rp from 'request-promise'
 
+import schedule from 'node-schedule'
+
 // 讀取 .env 檔
 dotenv.config()
 
@@ -13,6 +15,14 @@ const bot = linebot({
   channelSecret: process.env.CHANNEL_SECRET,
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 })
+let data = {}
+
+const aaa = async () => {
+  console.log('The answer to life, the universe, and everything!')
+  data = await rp({ uri: 'https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL', json: true })
+}
+aaa()
+schedule.scheduleJob('0 0 0 * * *', aaa())
 
 let re = []
 let msg = ''
@@ -20,8 +30,6 @@ let img = ''
 let msgerror = ''
 const animal = async (word) => {
   try {
-    const data = await rp({ uri: 'https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL', json: true })
-
     for (let i = 0; i < 1; i++) {
       const number = Math.floor(Math.random() * data.length)
 
